@@ -16,17 +16,14 @@ const App = () => {
     const openai = new OpenAIApi(configuration);
 
     await openai
-      .createCompletion({
-        model: "text-davinci-003",
-        prompt: "What day is it?",
+      .createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: "Hello world" }],
         temperature: 0.7,
         max_tokens: 256,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
       })
       .then((res) => {
-        setAnswer(res.data.choices[0].text);
+        setAnswer(JSON.stringify(res.data.choices[0].message));  
       })
       .catch((e) => {
         console.log("error: ", e);
@@ -37,7 +34,7 @@ const App = () => {
     <>
       <div className="App">
         <header className="App-header">
-          <p>What day is it?</p>
+          <p>role: user, content: Hello world</p>
           Answer: {answer}
         </header>
       </div>
